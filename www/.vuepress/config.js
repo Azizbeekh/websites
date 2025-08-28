@@ -67,8 +67,10 @@ module.exports = {
             buttonText: "Refresh"
           }
         },
-        sidebar: getSidebar('/knowledge/', 'Knowledge base'),
-        nav: getNavbar('/', 'Knowledge base', 'Contribute translation'),
+        sidebar: Object.assign({}, getSidebar('/knowledge/', 'Knowledge base'), getDevelopersSidebar('/developers/', 'Developers')),
+        nav: getNavbar('/', 'Knowledge base', 'Contribute translation').concat([
+          { text: 'Developers', link: `/developers/overview.md` }
+        ]),
         lastUpdated: 'Last Updated'
       },
       '/zh-hans/': {
@@ -161,6 +163,23 @@ function getSidebar(prefix, knowledgeTitle) {
         'exit_on_start',
       ]
     }]
+  return res
+}
+
+function getDevelopersSidebar(prefix, title) {
+  var res = {}
+  res[prefix] = [
+    {
+      title: title,
+      collapsable: false,
+      sidebarDepth: 2,
+      children: [
+        'overview',
+        'webhooks',
+        'components'
+      ]
+    }
+  ]
   return res
 }
 
